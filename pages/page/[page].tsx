@@ -36,7 +36,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     const res = await fetch('https://rickandmortyapi.com/api/character')
     const data = await res.json()
     const info: Info = data.info
-    const allPages = info.pages
+    const allPages = info.pages - 1
 
     let pages = []
     for (let i = 0; i < allPages; i++) {
@@ -74,7 +74,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
       pageNext,
       pagePrev,
       allPages
-    }
+    },
+    revalidate: 10
   }
 }
 

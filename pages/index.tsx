@@ -43,6 +43,7 @@ export const getStaticProps = async () => {
       pageNext,
       pagePrev
     },
+    revalidate: 10
   }
 }
 
