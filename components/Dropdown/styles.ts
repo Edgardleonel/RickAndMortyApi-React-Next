@@ -1,8 +1,15 @@
 import styled from 'styled-components'
 
 export const DropStyle = styled.div`
+text-align: right;
+.drop {
+  display: flex;
+  align-items: center;
+  span {
+    padding-right: 5px;
+  }
+}
 button {
-    margin-top: 2rem;
     border: 1px solid ${props => props.theme.colors.border};
     border-radius: 6px;
     color: ${props => props.theme.colors.text};

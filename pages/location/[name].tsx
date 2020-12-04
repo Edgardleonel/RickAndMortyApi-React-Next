@@ -10,25 +10,21 @@ import { useRouter } from 'next/router';
 import { GetStaticProps, GetStaticPaths } from 'next';
 
 
-type Character = {
+type Location = {
   id: number
   name: string
-  status: string
-  species: string
-  gender: string
-  origin: object
-  location: object
-  image: string
+  type: string
+  dimension: string
 }
 
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const res = await fetch('https://rickandmortyapi.com/api/character')
+    const res = await fetch('https://rickandmortyapi.com/api/location')
     const data = await res.json()
-    const characters: Character[] = data.results
+    const locations: Location[] = data.results
     
-    const paths = characters.map(res => {
-      return { params: { id: (res.id).toString() } }
+    const paths = locations.map(res => {
+      return { params: { name: (res.name).toString() } }
     })
   
     return {
@@ -39,25 +35,25 @@ export const getStaticPaths: GetStaticPaths = async () => {
   
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const { id } = context.params
-  const res = await fetch(`https://rickandmortyapi.com/api/character/${id}` )
+  const { name } = context.params
+  const res = await fetch(`https://rickandmortyapi.com/api/location?name=${name}` )
   const data = await res.json()
-  const character: Character[] = data
+  const location: Location[] = data.results
  
   return {
     props: {
-      character
+      location
     },
     revalidate: 10
   }
 }
 
 
-function Page ({ character }: InferGetStaticPropsType<typeof getStaticProps>) {
+function Location ({ location }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { isFallback } = useRouter()
   const router = useRouter()
 
-  if (isFallback && !character) {
+  if (isFallback && !location) {
     return <p>Loading...</p>
   }
 
@@ -69,7 +65,7 @@ function Page ({ character }: InferGetStaticPropsType<typeof getStaticProps>) {
           <button onClick={() => router.back()}><FaAngleLeft size={16} /><span>Voltar</span></button>
         </div>
         <Grid>
-          <Card info={character} />
+          <Card info={location} />
         </Grid>
       </main>
       <Footer />
@@ -77,4 +73,4 @@ function Page ({ character }: InferGetStaticPropsType<typeof getStaticProps>) {
   )
 }
 
-export default Page;
+export default Location;

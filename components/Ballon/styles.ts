@@ -13,7 +13,7 @@ export const BallonStyle = styled.div`
   display: flex;
   padding: 0;
   height: 4rem;
-  margin-top: -4.75rem;
+  margin-top: -3.75rem;
   color: #FFF;
   h3 {
     padding: 0;

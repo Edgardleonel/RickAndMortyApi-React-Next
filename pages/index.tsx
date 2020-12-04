@@ -2,6 +2,8 @@ import { useState } from 'react'
 
 import { Col, Container, Grid } from '../styles/styles'
 
+import { FaAngleDown } from 'react-icons/fa'
+
 import Header from '../components/Header'
 import Card from '../components/Card'
 import Chip from '../components/Chip'
@@ -11,7 +13,6 @@ import Pagination from '../components/Pagination'
 import Footer from '../components/Footer'
 
 import { InferGetStaticPropsType } from 'next'
-import { useRouter } from 'next/router'
 
 type Character = {
   id: number
@@ -19,11 +20,10 @@ type Character = {
   status: string
   species: string
   gender: string
-  oring: object
+  origin: object
   location: object
   image: string
 }
-
 
 export const getStaticProps = async () => {
   const res = await fetch('https://rickandmortyapi.com/api/character')
@@ -47,12 +47,10 @@ export const getStaticProps = async () => {
   }
 }
 
-
-function Home ({ characters, pagePrev, pageNext,pageDefault, allPages }: InferGetStaticPropsType<typeof getStaticProps>) {
+function Home ({ characters, pagePrev, pageNext,pageDefault, allPages }: InferGetStaticPropsType<typeof getStaticProps>) { 
   const [active, setActive] = useState(false)
   const [position, setPosition] = useState()
-  const router = useRouter()
-
+  
   const handleOpenBallon = (index) => {
     setActive(true)
     setPosition(index)
@@ -72,22 +70,23 @@ function Home ({ characters, pagePrev, pageNext,pageDefault, allPages }: InferGe
         <p className='description'>
         Tudo sobre os personagens
         </p>
-
+        <Pagination pageDefault={pageDefault} pageNext={pageNext} pagePrev={pagePrev} allPages={allPages} />
         <Grid>
           {characters.map((char, index) => (
-          <Col key={index} onClick={() => router.push(`/detail/${char.id}`)}>
+          <Col key={index}>
+          <Dropdown labels={char} label={<div className="drop"><span>Saiba mais</span><FaAngleDown size={16} /></div>}/>
           <div className={active && position === index ? 'open' : 'close'}>
             <Ballon referral={char.name} />
           </div>
           <div onMouseEnter={() => handleOpenBallon(index)} onMouseLeave={() => setActive(false)}>
             <Card info={char} />
           </div>
-            <Chip avatar={char.species} />
-            <Dropdown labels={char} label={'Localização'}/>
+          <div onMouseEnter={() => handleOpenBallon(index)} onMouseLeave={() => setActive(false)}>
+            <Chip avatar={char} />
+          </div>
           </Col>
           ))}
         </Grid>
-        <Pagination pageDefault={pageDefault} pageNext={pageNext} pagePrev={pagePrev} allPages={allPages} />
       </main>
       <Footer />
     </Container>

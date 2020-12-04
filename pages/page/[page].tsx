@@ -2,6 +2,8 @@ import { useState } from 'react'
 
 import { Col, Container, Grid } from '../../styles/styles'
 
+import { FaAngleDown } from 'react-icons/fa'
+
 import Header from '../../components/Header'
 import Card from '../../components/Card'
 import Chip from '../../components/Chip'
@@ -105,22 +107,21 @@ function Page ({ characters, pageDefault, pageNext, pagePrev, allPages }: InferG
         <p className='description'>
         Tudo sobre os personagens
         </p>
-
+        <Pagination pageDefault={pageDefault} pageNext={pageNext} pagePrev={pagePrev} allPages={allPages} />
         <Grid>
           {characters.map((char, index) => (
-          <Col key={index} onClick={() => router.push(`../detail/${char.id}`)}>
+          <Col key={index}>
+          <Dropdown labels={char} label={<div className="drop"><span>Saiba mais</span><FaAngleDown size={16} /></div>}/>
           <div className={active && position === index ? 'open' : 'close'}>
             <Ballon referral={char.name} />
           </div>
           <div onMouseEnter={() => handleOpenBallon(index)} onMouseLeave={() => setActive(false)}>
-            <Card info={char} />
+            <Card info={char}  />
           </div>
-            <Chip avatar={char.species} />
-            <Dropdown labels={char} label={'localização'}/>
+            <Chip avatar={char} />
           </Col>
           ))}
         </Grid>
-        <Pagination pageDefault={pageDefault} pageNext={pageNext} pagePrev={pagePrev} allPages={allPages} />
       </main>
       <Footer />
     </Container>
