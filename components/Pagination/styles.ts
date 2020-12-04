@@ -21,10 +21,19 @@ export const PaginationStyle = styled.div`
     text-align: center;
   }
   button {
+    display: flex;
+    align-items: center;
     cursor: pointer;
     &:hover {
       background-color: ${props => props.theme.colors.border};
     }
+  }
+  .search {
+    border: none;
+    border-bottom: 1px solid ${props => props.theme.colors.border};
+    width: 80px;
+    border-radius: 0;
+    margin-left: 0;
   }
 }
 `
