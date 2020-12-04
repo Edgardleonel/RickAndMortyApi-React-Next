@@ -27,7 +27,7 @@ export const CardStyle = styled.div`
         border: 1px solid ${props => props.theme.colors.primary};
         color: ${props => props.theme.colors.primary};
         background-color: #000;
-        height: 10rem ;
+        height: auto;
     }
 
     &:hover,
@@ -54,6 +54,12 @@ export const CardStyle = styled.div`
         .dead {
             color: ${props => props.theme.colors.danger}
         }
+    }
+}
+
+@media (max-width: 768px) {
+    .card.detail {
+        height: auto;
     }
 }
 

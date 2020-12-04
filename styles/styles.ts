@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const Container = styled.div`
-  min-height: 100vh;
+  min-height: 50vh;
   padding: 0;
   display: flex;
   flex-direction: column;
